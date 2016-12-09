@@ -163,6 +163,22 @@ module LinkedIn
       post(path, MultiJson.dump(defaults.merge(share)), "Content-Type" => "application/json")
     end
 
+    # Create a comment as the company on a share for a company
+    # that the authenticated user administers
+    #
+    # Permissions: rw_company_admin
+    #
+    # @param [String] company_id Company ID
+    # @param [String] update_key a update/update-key representing a
+    #   particular company update
+    # @macro share_input_fields
+    # @param [String] comment The text of the comment
+    # @return [void]
+    def add_company_comment(company_id, update_key, comment)
+      path = "/companies/#{company_id}/updates/key=#{update_key}/update-comments-as-company/"
+      post(path, MultiJson.dump(comment: comment), "Content-Type" => "application/json")
+    end
+
     # (Create) authenticated user starts following a company
     #
     # @see http://developer.linkedin.com/documents/company-follow-and-suggestions
